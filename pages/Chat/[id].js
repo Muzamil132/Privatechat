@@ -44,7 +44,7 @@ const Index = () => {
         </div>
         <div className={styles.smsbox}>
           {[...Array(200)].map((_, i) => (
-            <div className={`${styles.msg_wrapper`}>
+            <div className={`${styles.msg_wrapper`}}>
               <div className={`${styles.bubble} bg-bubble`}>
                 <p className="text-sm  ">I am GREAT </p>
               </div>
