@@ -33,7 +33,7 @@
   flex-direction: column;
   background-color: #121212;
   overflow-y: scroll;
-  height: 100vh;
+  height: 90vh;
   scrollbar-width: thin;
 }
 .header {
