@@ -1,9 +1,20 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 html,
 body {
   padding: 0;
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  background-color: #121212;
+  height: 100%;
+  min-height: 100%;
+}
+.gradient {
+  /* background-color: #21d4fd; */
+  background-image: linear-gradient(19deg, #21d4fd 0%, #b721ff 100%);
 }
 
 a {
