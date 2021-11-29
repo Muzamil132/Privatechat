@@ -49,12 +49,12 @@ const Layout = ({ children, data }) => {
           <h4 className="px-3 text-2xl py-3 font-semibold text-gray-600 ">
             Chats
           </h4>
-          <p
+          <button
             onClick={() => LogUserout()}
-            className="font-semibold  cursor-pointer text-textdark opacity-60 mr-3"
+            className="font-semibold bg-sdark px-3 py-2 text-sm shadow-lg rounded-md  cursor-pointer text-textdark opacity-60 mr-3"
           >
             Sign out
-          </p>
+          </button>
         </div>
 
         <div className="px-2 pb-3">

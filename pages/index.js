@@ -66,7 +66,7 @@ export default function Home() {
           formdata.email,
           formdata.password
         );
-        Cookies.set("user", JSON.stringify(result));
+        Cookies.set("user", JSON.stringify(result.user));
 
         await setDoc(doc(db, "users", result.user.uid), {
           uid: result.user.uid,

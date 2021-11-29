@@ -35,7 +35,7 @@ import {
 } from "firebase/firestore";
 const Index = ({ userA }) => {
   const router = useRouter();
-
+  console.log(userA);
   // const [userA, setUserA] = React.useState(null);
   const { user } = React.useContext(AuthContext);
   const [message, setMessage] = React.useState("");
@@ -88,6 +88,9 @@ const Index = ({ userA }) => {
             <div className="flex space-x-3 items-center">
               <Avatar size={40} round={true} />
               <p className="text-textdark opaacity-70 text-sm">{userA?.name}</p>
+              <p className="text-textdark opacity-60 text-xs">
+                {userA.isOnline ? "online" : ""}
+              </p>
             </div>
             <div className="flex space-x-3 items-center">
               <PhoneIcon className="w-7 h-7 mr-3  text-textdark opacity-60 text-bold cursor-pointer " />

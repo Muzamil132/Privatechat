@@ -58,7 +58,7 @@ export default function Login() {
           formdata.email,
           formdata.password
         );
-        if (result.user) {
+        if (result) {
           Cookies.set("user", JSON.stringify(result));
           await updateDoc(doc(db, "users", result.user.uid), {
             isOnline: true,
