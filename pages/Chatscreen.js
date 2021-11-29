@@ -30,24 +30,24 @@ import {
   addDoc,
 } from "firebase/firestore";
 
-const Layout = ({ children, selectChat }) => {
+const Layout = ({ children, data }) => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
-  console.log(user);
-  const [data, setData] = useState([]);
-  React.useEffect(() => {
-    getAllUsers();
-  }, []);
+  // console.log(user);
+  // const [data, setData] = useState([]);
+  // React.useEffect(() => {
+  //   getAllUsers();
+  // }, [router]);
 
-  const getAllUsers = async () => {
-    const snap = await getDocs(collection(db, "users"));
-    let bucket = [];
-    snap.forEach((doc) => {
-      bucket.push(doc.data());
-    });
-    setData(bucket);
-    console.log(data);
-  };
+  // const getAllUsers = async () => {
+  //   const snap = await getDocs(collection(db, "users"));
+  //   let bucket = [];
+  //   snap.forEach((doc) => {
+  //     bucket.push(doc.data());
+  //   });
+  //   setData(bucket);
+  //   console.log(data);
+  // };
 
   return (
     <div className="flex items-center justify-center ">
@@ -87,3 +87,17 @@ const Layout = ({ children, selectChat }) => {
 };
 
 export default Layout;
+
+export const getServerSideProps = async () => {
+  const userRef = await getDocs(collection(db, "users"));
+  let bucket = [];
+  userRef.forEach((doc) => {
+    bucket.push(doc.data());
+  });
+
+  return {
+    props: {
+      data: bucket,
+    },
+  };
+};
