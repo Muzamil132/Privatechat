@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Layout from "../../components/Layout";
 import styles from "../../styles/bubble.module.css";
 import { AuthContext } from "../../context";
+import Moment from "react-moment";
 import {
   useWindowSize,
   useWindowWidth,
@@ -100,6 +101,9 @@ const Index = ({ userA }) => {
                 } ${msg.sender == me ? "bg-bubble" : "bg-sdark"}`}
               >
                 <p className="text-sm  ">{msg.message} </p>
+                <small className="text-xs text-textdark opacity-70 ">
+                  <Moment fromNow>{msg.createdAt.toDate()}</Moment>
+                </small>
               </div>
             </div>
           ))}

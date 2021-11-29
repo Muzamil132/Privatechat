@@ -8,7 +8,7 @@ module.exports = {
         pdark: "#121212",
         sdark: "#242424",
         textdark: "#ffffff",
-        bubble: "#a65fec",
+        bubble: "#075e54",
       },
     },
   },
