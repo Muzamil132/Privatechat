@@ -7,6 +7,7 @@ import Input from "../components/Input";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { db, auth } from "../fire";
+import { AuthContext } from "../context";
 import {
   getFirestore,
   collection,
@@ -19,10 +20,11 @@ import {
   addDoc,
 } from "firebase/firestore";
 import { useRouter } from "next/router";
-
+// import {user} =useContext()
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
-
+import Cookies from "js-cookie";
 export default function Login() {
+  const { user } = React.useContext(AuthContext);
   const router = useRouter();
   const [formdata, setFormdata] = React.useState({
     email: "",
@@ -38,21 +40,33 @@ export default function Login() {
     });
   };
 
+  React.useEffect(() => {
+    console.log(user);
+    if (user) {
+      router.push("/Chatscreen");
+    }
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (Object.values(formdata).includes("")) {
       toast.error("Please fill all the fields");
     } else {
-      const result = await signInWithEmailAndPassword(
-        auth,
-        formdata.email,
-        formdata.password
-      );
-      if (result.user) {
-        await updateDoc(doc(db, "users", result.user.uid), {
-          isOnline: true,
-        });
-        router.push("/Chatscreen");
+      try {
+        const result = await signInWithEmailAndPassword(
+          auth,
+          formdata.email,
+          formdata.password
+        );
+        if (result.user) {
+          Cookies.set("user", JSON.stringify(result));
+          await updateDoc(doc(db, "users", result.user.uid), {
+            isOnline: true,
+          });
+          router.push("/Chatscreen");
+        }
+      } catch (error) {
+        toast.error(error.message);
       }
     }
   };

@@ -1,5 +1,5 @@
 import Head from "next/head";
-import React from "react";
+import React, { useEffect } from "react";
 import Image from "next/image";
 import styles from "../styles/Home.module.css";
 import { app } from "../fire";
@@ -8,6 +8,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useRouter } from "next/router";
 import { db, auth } from "../fire";
+import Cookies from "js-cookie";
 import {
   getFirestore,
   collection,
@@ -18,6 +19,7 @@ import {
   doc,
   addDoc,
 } from "firebase/firestore";
+import { AuthContext } from "../context";
 
 import {
   getAuth,
@@ -26,6 +28,7 @@ import {
 } from "firebase/auth";
 
 export default function Home() {
+  const { user } = React.useContext(AuthContext);
   const router = useRouter();
   const [formdata, setFormdata] = React.useState({
     username: "",
@@ -33,6 +36,12 @@ export default function Home() {
     password: "",
     confirmpassword: "",
   });
+
+  useEffect(() => {
+    if (user) {
+      router.push("/Chatscreen");
+    }
+  }, [user]);
 
   const handleChange = (event) => {
     const { value, name } = event.target;
@@ -43,17 +52,9 @@ export default function Home() {
     });
   };
 
-  // const addUser = async (username, email, uid) => {
-  //   console.log("I am Good bro ");
-  //   const userRef = await addDoc(collection(db, "users"), {
-  //     username,
-  //     email,
-  //     uid,
-  //   });
-  // };
-
   const handleSubmit = async (e) => {
     e.preventDefault();
+    console.log(formdata);
     if (Object.values(formdata).includes("")) {
       toast.error("Please fill all the fields");
     } else if (formdata.password !== formdata.confirmpassword) {
@@ -65,6 +66,7 @@ export default function Home() {
           formdata.email,
           formdata.password
         );
+        Cookies.set("user", JSON.stringify(result));
 
         await setDoc(doc(db, "users", result.user.uid), {
           uid: result.user.uid,

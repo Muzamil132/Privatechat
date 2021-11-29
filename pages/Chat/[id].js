@@ -8,6 +8,7 @@ import {
   useWindowWidth,
   useWindowHeight,
 } from "@react-hook/window-size";
+
 import { useRouter } from "next/router";
 import { db } from "../../fire";
 import Avatar from "react-avatar";
@@ -50,6 +51,12 @@ const Index = ({ userA }) => {
   useEffect(() => {
     getAllmessages();
   }, [roomId]);
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user]);
 
   const getAllmessages = async () => {
     const q = query(

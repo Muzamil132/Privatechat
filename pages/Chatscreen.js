@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import {
   SearchIcon,
   PhoneIcon,
@@ -10,6 +10,7 @@ import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
 } from "firebase/auth";
+import Cookies from "js-cookie";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import styles from "../styles/bubble.module.css";
@@ -33,28 +34,30 @@ import {
 const Layout = ({ children, data }) => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
-  // console.log(user);
-  // const [data, setData] = useState([]);
-  // React.useEffect(() => {
-  //   getAllUsers();
-  // }, [router]);
+  console.log(user);
+  useEffect(() => {
+    if (user == null) {
+      router.push("/login");
+    }
+  }, [user]);
 
-  // const getAllUsers = async () => {
-  //   const snap = await getDocs(collection(db, "users"));
-  //   let bucket = [];
-  //   snap.forEach((doc) => {
-  //     bucket.push(doc.data());
-  //   });
-  //   setData(bucket);
-  //   console.log(data);
+  // const LogUserout = () => {
+  //   Logout();
+  //   Cookies.remove("user");
   // };
 
   return (
     <div className="flex items-center justify-center ">
       <div className="min-h-screen  h-full sticky top-0 bottom-0 lg:w-1/2 w-full border border-gray-700 ">
-        <h4 className="px-3 text-2xl py-3 font-semibold text-gray-600 ">
-          Chats
-        </h4>
+        <div className="flex justify-between items-center ">
+          <h4 className="px-3 text-2xl py-3 font-semibold text-gray-600 ">
+            Chats
+          </h4>
+          <p className="font-semibold  cursor-pointer text-textdark opacity-60 mr-3">
+            Sign out
+          </p>
+        </div>
+
         <div className="px-2 pb-3">
           <div className="flex border border-gray-700 bg-sdark py-2 px-2 rounded-full ">
             <SearchIcon className="w-6 h-6 mr-2  text-textdark opacity-60 text-bold " />
