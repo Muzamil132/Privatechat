@@ -6,6 +6,7 @@ import {
 } from "@heroicons/react/outline";
 import {
   getAuth,
+  signOut,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   onAuthStateChanged,
@@ -32,7 +33,7 @@ import {
 } from "firebase/firestore";
 
 const Layout = ({ children, data }) => {
-  const { user } = useContext(AuthContext);
+  const { user, LogUserout } = useContext(AuthContext);
   const router = useRouter();
   console.log(user);
   useEffect(() => {
@@ -41,11 +42,6 @@ const Layout = ({ children, data }) => {
     }
   }, [user]);
 
-  // const LogUserout = () => {
-  //   Logout();
-  //   Cookies.remove("user");
-  // };
-
   return (
     <div className="flex items-center justify-center ">
       <div className="min-h-screen  h-full sticky top-0 bottom-0 lg:w-1/2 w-full border border-gray-700 ">
@@ -53,7 +49,10 @@ const Layout = ({ children, data }) => {
           <h4 className="px-3 text-2xl py-3 font-semibold text-gray-600 ">
             Chats
           </h4>
-          <p className="font-semibold  cursor-pointer text-textdark opacity-60 mr-3">
+          <p
+            onClick={() => LogUserout()}
+            className="font-semibold  cursor-pointer text-textdark opacity-60 mr-3"
+          >
             Sign out
           </p>
         </div>

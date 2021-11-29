@@ -1,7 +1,9 @@
 import { createContext, useEffect, useState } from "react";
-import { onAuthStateChanged } from "firebase/auth";
+import { onAuthStateChanged, signOut } from "firebase/auth";
 import Cookies from "js-cookie";
-import { auth } from "./fire";
+import { auth, db } from "./fire";
+
+import { updateDoc, doc, addDoc } from "firebase/firestore";
 
 export const AuthContext = createContext();
 
@@ -10,6 +12,16 @@ export const AuthProvider = ({ children }) => {
     Cookies.get("user") ? JSON.parse(Cookies.get("user")) : null
   );
   const [loading, setLoading] = useState(true);
+
+  const LogUserout = async () => {
+    console.log("logout");
+    signOut(auth);
+    await updateDoc(doc(db, "users", user.uid), {
+      isOnline: false,
+    });
+    Cookies.remove("user");
+    setUser(null);
+  };
 
   useEffect(() => {
     onAuthStateChanged(auth, (user) => {
@@ -22,7 +34,9 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user }}>{children}</AuthContext.Provider>
+    <AuthContext.Provider value={{ user, LogUserout }}>
+      {children}
+    </AuthContext.Provider>
   );
 };
 

@@ -84,7 +84,25 @@ const Layout = ({ children, selectChat }) => {
         ))}
       </div>
       <div className="w-1/2 lg:block border-r hidden flex   border-gray-600 ">
-        {children}
+        <div className="flex py-2 px-3 sticky top-0 shadow-xl bg-sdark mb-5 justify-between">
+          <div className="flex space-x-3 items-center">
+            <Avatar size={40} round={true} />
+            <p className="text-textdark opaacity-70 text-sm">Hussain</p>
+          </div>
+          <div className="flex space-x-3 items-center">
+            <PhoneIcon className="w-7 h-7 mr-3  text-textdark opacity-60 text-bold cursor-pointer " />
+            <VideoCameraIcon className="w-7 h-7 mr-3  text-textdark opacity-60 text-bold cursor-pointer " />
+          </div>
+        </div>
+        <div className="flex-1 scroll-y">{children}</div>
+
+        <div className="flex absolute  bottom-0  bg-sdark py-2 px-2 rounded-full ">
+          <SearchIcon className="w-6 h-6 mr-2  text-textdark opacity-60 text-bold " />
+          <input
+            placeholder="Search..."
+            className="bg-sdark text-textdark opacity-60 px-3 outline-none"
+          />
+        </div>
       </div>
       <div className=" h-full sticky top-0   w-1/4 hidden lg:block ">
         {[...Array(200)].map((_, i) => (
