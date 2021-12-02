@@ -26,6 +26,7 @@ import {
   setDoc,
   orderBy,
   where,
+  Timestamp,
   getDoc,
   onSnapshot,
   getDocs,
@@ -75,7 +76,7 @@ const Index = ({ userA }) => {
       message,
       sender: me,
       reciever: id,
-      createdAt: new Date(),
+      createdAt: Timestamp.now(),
     });
     setMessage("");
   };
